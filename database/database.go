@@ -40,6 +40,7 @@ func Connect() *gorm.DB {
 	return db
 }
 
+// AutoMigrate migrates the models specified
 func AutoMigrate() {
 	db.AutoMigrate(&models.User{})
 }
