@@ -15,6 +15,8 @@ func Instance() *gorm.DB {
 }
 
 func Connect() *gorm.DB {
+	var err error
+
 	dsn := fmt.Sprintf(
 		"user=%s dbname=%s port=%s sslmode=disable TimeZone=UTC",
 		os.Getenv("DB_USERNAME"),
@@ -22,7 +24,7 @@ func Connect() *gorm.DB {
 		os.Getenv("DB_PORT"),
 	)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		panic("Error connecting to the database")
