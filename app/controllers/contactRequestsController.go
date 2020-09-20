@@ -1,8 +1,11 @@
 package controllers
 
 import (
-	"goDemoApi/mail"
+	"context"
+	"goDemoApi/queue"
+	"goDemoApi/worker/tasks"
 	"os"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/jordan-wright/email"
@@ -19,8 +22,9 @@ func ContactRequestsStore(c *fiber.Ctx) error {
 		Text:    []byte("Text Body is, of course, supported!"),
 		HTML:    []byte("<h1>Text Body is, of course, supported!</h1>"),
 	}
-
-	err := mail.SendMail(e)
+	msg := tasks.ContactEmailTask.WithArgs(context.Background(), e)
+	msg.Delay = time.Minute
+	err := queue.AddToMainQueue(msg)
 	if err != nil {
 		panic(err)
 	}
