@@ -24,7 +24,8 @@ func Connect() *gorm.DB {
 	var err error
 
 	dsn := fmt.Sprintf(
-		"user=%s password=%s dbname=%s port=%s %s TimeZone=UTC",
+		"host=%s user=%s password=%s dbname=%s port=%s %s TimeZone=UTC",
+		os.Getenv("DB_HOSTNAME"),
 		os.Getenv("DB_USERNAME"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_DATABASE"),
