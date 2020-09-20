@@ -10,14 +10,21 @@ import (
 	"github.com/vmihailenco/taskq/v3/redisq"
 )
 
+// Redis is the Redis client
 var Redis *redis.Client
+
+// Factory is the taskq Factory
 var Factory taskq.Factory
+
+// MainQueue is the main queue to put tasks on
 var MainQueue taskq.Queue
 
+// AddToMainQueue adds a given taskq.Message to the MainQueue
 func AddToMainQueue(task *taskq.Message) error {
 	return MainQueue.Add(task)
 }
 
+// InitializeRedis initalizes a Redis connection from the os environment variables
 func InitializeRedis() {
 	redisDb, _ := strconv.Atoi(os.Getenv("REDIS_DATABASE"))
 
