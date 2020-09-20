@@ -1,3 +1,3 @@
-web: bin/go-demo-api
-# worker: go run worker/main.go
+web: bin/goDemoApi
+worker: bin/worker
 # release: go build -o bin/go-demo-api
