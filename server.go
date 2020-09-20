@@ -5,8 +5,10 @@ import (
 	"goDemoApi/database"
 	"goDemoApi/queue"
 	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/basicauth"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/joho/godotenv"
 )
@@ -23,6 +25,12 @@ func main() {
 	queue.InitializeRedis()
 
 	app := fiber.New()
+
+	app.Use(basicauth.New(basicauth.Config{
+		Users: map[string]string{
+			os.Getenv("BASIC_AUTH_USERNAME"): os.Getenv("BASIC_AUTH_PASSWORD"),
+		},
+	}))
 
 	app.Use(recover.New())
 
