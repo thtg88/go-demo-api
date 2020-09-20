@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"goDemoApi/app/controllers"
 	"goDemoApi/database"
 	"goDemoApi/queue"
@@ -14,9 +15,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var (
-	prod = flag.Bool("prod", false, "Enable prefork in Production")
-)
+var prod = flag.Bool("prod", false, "Enable prefork in Production")
 
 func main() {
 	err := godotenv.Load()
@@ -46,5 +45,9 @@ func main() {
 	v1.Get("/users/:id", controllers.UsersShow)
 	v1.Post("/contact-requests", controllers.ContactRequestsStore)
 
-	app.Listen(":3000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	app.Listen(fmt.Sprintf(":%s", port))
 }
