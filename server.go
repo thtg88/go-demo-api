@@ -3,6 +3,7 @@ package main
 import (
 	"goDemoApi/app/controllers"
 	"goDemoApi/database"
+	"goDemoApi/queue"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,6 +19,8 @@ func main() {
 
 	database.Connect()
 	database.AutoMigrate()
+
+	queue.InitializeRedis()
 
 	app := fiber.New()
 

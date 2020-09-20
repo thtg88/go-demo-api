@@ -16,6 +16,8 @@ func main() {
 		log.Print("Could not load .env file")
 	}
 
+	queue.InitializeRedis()
+
 	flag.Parse()
 
 	c := context.Background()
