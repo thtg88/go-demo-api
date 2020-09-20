@@ -15,7 +15,7 @@ type NotFoundResponse struct {
 func UsersShow(c *fiber.Ctx) error {
 	var user models.User
 
-	result := database.Instance().First(&user, c.Params("id"))
+	result := database.Instance().Preload("Role").First(&user, c.Params("id"))
 
 	if result.RowsAffected == 0 {
 		errors := make(map[string][]string)
