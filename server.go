@@ -2,7 +2,6 @@ package main
 
 import (
 	"goDemoApi/app/controllers"
-	"goDemoApi/app/models"
 	"goDemoApi/database"
 	"log"
 
@@ -17,8 +16,8 @@ func main() {
 		log.Print("Could not load .env file")
 	}
 
-	db := database.Connect()
-	db.AutoMigrate(&models.User{})
+	database.Connect()
+	database.AutoMigrate()
 
 	app := fiber.New()
 

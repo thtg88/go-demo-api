@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"goDemoApi/app/models"
 	"os"
 
 	"gorm.io/driver/postgres"
@@ -31,4 +32,8 @@ func Connect() *gorm.DB {
 	}
 
 	return db
+}
+
+func AutoMigrate() {
+	db.AutoMigrate(&models.User{})
 }
