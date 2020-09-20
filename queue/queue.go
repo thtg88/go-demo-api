@@ -27,17 +27,21 @@ func AddToMainQueue(task *taskq.Message) error {
 // InitializeRedis initalizes a Redis connection from the os environment variables
 func InitializeRedis() {
 	redisDb, _ := strconv.Atoi(os.Getenv("REDIS_DATABASE"))
-
-	Redis = redis.NewClient(&redis.Options{
+	username := os.Getenv("REDIS_USERNAME")
+	opts := &redis.Options{
 		Addr: fmt.Sprintf(
 			"%s:%s",
 			os.Getenv("REDIS_HOST"),
 			os.Getenv("REDIS_PORT"),
 		),
-		Username: os.Getenv("REDIS_USERNAME"),
 		Password: os.Getenv("REDIS_PASSWORD"),
 		DB:       redisDb,
-	})
+	}
+	if username != "h" {
+		opts.Username = username
+	}
+
+	Redis = redis.NewClient(opts)
 
 	Factory = redisq.NewFactory()
 
