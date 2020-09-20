@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"goDemoApi/app/controllers"
 	"goDemoApi/database"
 	"goDemoApi/queue"
@@ -11,6 +12,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/basicauth"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/joho/godotenv"
+)
+
+var (
+	prod = flag.Bool("prod", false, "Enable prefork in Production")
 )
 
 func main() {
@@ -24,7 +29,9 @@ func main() {
 
 	queue.InitializeRedis()
 
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		Prefork: *prod, // go run app.go -prod
+	})
 
 	app.Use(basicauth.New(basicauth.Config{
 		Users: map[string]string{
