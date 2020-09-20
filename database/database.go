@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"goDemoApi/app/models"
+	"log"
 	"os"
 
 	"gorm.io/driver/postgres"
@@ -30,6 +31,8 @@ func Connect() *gorm.DB {
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_SSL_MODE"),
 	)
+
+	log.Print(dsn)
 
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
