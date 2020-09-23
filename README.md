@@ -14,16 +14,18 @@ Return a user from a given ID.
 
 ```json
 {
-    "ID": 1233,
-    "FirstName": "John",
-    "LastName": "Smith",
-    "Email": "john.smith@acme.com",
-    "RoleID": 1,
-    "CreatedAt": "2020-10-11T17:57:50Z",
-    "UpdatedAt": "2020-10-11T17:57:50Z",
-    "Role": {
-        "ID": 1,
-        "Name": "User"
+    "Resource": {
+        "ID": 1233,
+        "FirstName": "John",
+        "LastName": "Smith",
+        "Email": "john.smith@acme.com",
+        "RoleID": 1,
+        "CreatedAt": "2020-10-11T17:57:50Z",
+        "UpdatedAt": "2020-10-11T17:57:50Z",
+        "Role": {
+            "ID": 1,
+            "Name": "User"
+        }
     }
 }
 ```
@@ -57,7 +59,7 @@ Send an email based on environment variable. The email is placed on a queue to b
 
 This module uses the following Go packages:
 
-- [Fiber](https://github.com/gofiber/fiber): for HTTP routing and middlewares
+- [Gin](https://github.com/gin-gonic/gin): for HTTP routing and middlewares
 - [GORM](https://github.com/go-gorm/gorm): ORM
 - [taskq](https://github.com/vmihailenco/taskq): for async job processing via Redis
 - [GoDotEnv](https://github.com/joho/godotenv): for loading env variables from an `.env` file

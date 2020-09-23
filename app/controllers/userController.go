@@ -3,29 +3,32 @@ package controllers
 import (
 	"goDemoApi/app/models"
 	"goDemoApi/database"
+	"net/http"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 )
 
-type NotFoundResponse struct {
+type notFoundResponse struct {
 	Errors  map[string][]string
 	Message string
 }
 
-func UsersShow(c *fiber.Ctx) error {
+// UsersShow returns the user from the given id
+func UsersShow(c *gin.Context) {
 	var user models.User
 
-	result := database.Instance().Preload("Role").First(&user, c.Params("id"))
+	result := database.Instance().Debug().Preload("Role").Find(&user, c.Param("id"))
 
-	if result.RowsAffected == 0 {
-		errors := make(map[string][]string)
-		errors["NotFound"] = []string{"User not found."}
-
-		return c.Status(fiber.StatusNotFound).JSON(&NotFoundResponse{
-			Errors:  errors,
-			Message: "There was a problem processing your request",
-		})
+	if result.RowsAffected > 0 {
+		c.JSON(http.StatusOK, gin.H{"Resource": user})
+		return
 	}
 
-	return c.JSON(user)
+	errors := make(map[string][]string)
+	errors["NotFound"] = []string{"User not found."}
+
+	c.JSON(http.StatusNotFound, &notFoundResponse{
+		Errors:  errors,
+		Message: "There was a problem processing your request",
+	})
 }
