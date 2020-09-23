@@ -21,16 +21,18 @@ func Instance() *gorm.DB {
 // And assigns the DB instance to the module db var
 func Connect() *gorm.DB {
 	var err error
-
+	password := os.Getenv("DB_PASSWORD")
 	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s %s TimeZone=UTC",
+		"host=%s user=%s dbname=%s port=%s %s TimeZone=UTC",
 		os.Getenv("DB_HOSTNAME"),
 		os.Getenv("DB_USERNAME"),
-		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_DATABASE"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_SSL_MODE"),
 	)
+	if password != "" {
+		dsn = dsn + fmt.Sprintf("password=%s", password)
+	}
 
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
