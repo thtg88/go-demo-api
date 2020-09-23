@@ -4,18 +4,21 @@ import (
 	"context"
 	"goDemoApi/queue"
 	"goDemoApi/worker/tasks"
+	"net/http"
 	"os"
 	"time"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 	"github.com/jordan-wright/email"
 )
 
-type ContactRequestsStoreResponse struct {
+type contactRequestsStoreResponse struct {
 	Success bool
 }
 
-func ContactRequestsStore(c *fiber.Ctx) error {
+// ContactRequestsStore puts an email message on the main queue
+// to be sent at a later date
+func ContactRequestsStore(c *gin.Context) {
 	e := &email.Email{
 		To:      []string{os.Getenv("MAIL_INTERNAL_NOTIFICATION_ADDRESS")},
 		Subject: os.Getenv("MAIL_INTERNAL_SUBJECT"),
@@ -29,7 +32,7 @@ func ContactRequestsStore(c *fiber.Ctx) error {
 		panic(err)
 	}
 
-	return c.JSON(&ContactRequestsStoreResponse{
+	c.JSON(http.StatusOK, &contactRequestsStoreResponse{
 		Success: true,
 	})
 }
