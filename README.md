@@ -66,3 +66,4 @@ This module uses the following Go packages:
 - [taskq](https://github.com/vmihailenco/taskq): for async job processing via Redis
 - [GoDotEnv](https://github.com/joho/godotenv): for loading env variables from an `.env` file
 - [email](https://github.com/jordan-wright/email): to send email via SMTP
+- [govalidator](https://github.com/thedevsaddam/govalidator): for Laravel-style request validation
