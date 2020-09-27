@@ -2,7 +2,7 @@ package http
 
 import (
 	"fmt"
-	"goDemoApi/app/controllers"
+	"goDemoApi/internal/goDemoApi/http/controllers"
 	"os"
 
 	"github.com/gin-gonic/gin"
