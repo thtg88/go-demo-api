@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"goDemoApi/app/models"
+	"goDemoApi/internal/goDemoApi/models"
 	"os"
 
 	"gorm.io/driver/postgres"
