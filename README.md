@@ -8,7 +8,7 @@ This project is a proof of concept to understand the Go (Golang) ecosystem.
 
 `GET /users/:id`
 
-Return a user from a given ID.
+Return a user from a Postgres database from a given ID.
 
 #### Response
 
@@ -45,7 +45,9 @@ If a user is not found the following response is returned:
 
 ### Create Contact Request
 
-Send an email based on environment variable. The email is placed on a queue to be send by a worker.
+Send an email based on environment variables and given message.
+
+The email is placed on a Redis instance to be processed later by a worker.
 
 #### Response
 
