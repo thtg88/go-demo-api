@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"context"
+	"goDemoApi/cmd/worker/tasks"
 	"goDemoApi/queue"
-	"goDemoApi/worker/tasks"
 	"net/http"
 	"os"
 	"time"
