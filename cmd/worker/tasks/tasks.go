@@ -11,23 +11,22 @@ import (
 	"github.com/vmihailenco/taskq/v3"
 )
 
-var (
-	ContactEmailTask = taskq.RegisterTask(&taskq.TaskOptions{
-		Name: "contactRequestsEmailer",
-		Handler: func(e *email.Email) error {
-			SendContatEmail(e)
-			time.Sleep(time.Millisecond)
-			return nil
-		},
-	})
-)
+// ContactEmailTask is a taskq task that sends given emails
+var ContactEmailTask = taskq.RegisterTask(&taskq.TaskOptions{
+	Name: "contactRequestsEmailer",
+	Handler: func(e *email.Email) error {
+		SendContactEmail(e)
+		time.Sleep(time.Millisecond)
+		return nil
+	},
+})
 
-var counter int32
-
-func SendContatEmail(e *email.Email) {
+// SendContactEmail sends the given email
+func SendContactEmail(e *email.Email) {
 	mail.SendMail(e)
 }
 
+// WaitSignal waits for a term signal to stop the worker
 func WaitSignal() os.Signal {
 	ch := make(chan os.Signal, 2)
 	signal.Notify(
