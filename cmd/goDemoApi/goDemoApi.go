@@ -3,7 +3,7 @@ package main
 import (
 	"goDemoApi/database"
 	"goDemoApi/internal/goDemoApi/http"
-	"goDemoApi/queue"
+	"goDemoApi/internal/worker/queue"
 	"log"
 
 	"github.com/joho/godotenv"
