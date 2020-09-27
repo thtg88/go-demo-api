@@ -21,26 +21,56 @@ func Instance() *gorm.DB {
 // And assigns the DB instance to the module db var
 func Connect() *gorm.DB {
 	var err error
-	password := os.Getenv("DB_PASSWORD")
-	dsn := fmt.Sprintf(
-		"host=%s user=%s dbname=%s port=%s %s TimeZone=UTC",
-		os.Getenv("DB_HOSTNAME"),
-		os.Getenv("DB_USERNAME"),
-		os.Getenv("DB_DATABASE"),
-		os.Getenv("DB_PORT"),
-		os.Getenv("DB_SSL_MODE"),
-	)
-	if password != "" {
-		dsn = dsn + fmt.Sprintf("password=%s", password)
+	var dialector gorm.Dialector
+
+	dialector, err = GetDialector(os.Getenv("DB_CONNECTION"))
+	if err != nil {
+		panic(err)
 	}
 
-	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-
+	db, err = gorm.Open(dialector, &gorm.Config{})
 	if err != nil {
 		panic("Error connecting to the database")
 	}
 
 	return db
+}
+
+// GetDialector returns a GORM Dialector from a given connection type string.
+func GetDialector(connection string) (gorm.Dialector, error) {
+	if connection != "pgsql" {
+		return nil, fmt.Errorf("database: unrecognised connection type %s", connection)
+	}
+
+	dsn, _ := GetDsn(connection)
+
+	return postgres.Open(dsn), nil
+}
+
+// GetDsn returns a DSN from a given database connection type string
+func GetDsn(connection string) (string, error) {
+	if connection != "pgsql" {
+		return "", fmt.Errorf("database: unrecognised connection type %s", connection)
+	}
+
+	password := os.Getenv("DB_PASSWORD")
+	sslMode := os.Getenv("DB_SSL_MODE")
+	dsn := fmt.Sprintf(
+		"host=%s user=%s dbname=%s port=%s",
+		os.Getenv("DB_HOSTNAME"),
+		os.Getenv("DB_USERNAME"),
+		os.Getenv("DB_DATABASE"),
+		os.Getenv("DB_PORT"),
+	)
+	if password != "" {
+		dsn = dsn + fmt.Sprintf(" password=%s", password)
+	}
+	if sslMode != "" {
+		dsn = dsn + fmt.Sprintf(" sslmode=%s", sslMode)
+	}
+	dsn = dsn + " TimeZone=UTC"
+
+	return dsn, nil
 }
 
 // AutoMigrate migrates the models specified
