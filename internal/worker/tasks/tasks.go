@@ -1,7 +1,7 @@
 package tasks
 
 import (
-	"goDemoApi/mail"
+	"goDemoApi/internal/worker/mail"
 	"os"
 	"os/signal"
 	"syscall"

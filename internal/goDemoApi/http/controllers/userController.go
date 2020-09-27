@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"goDemoApi/database"
+	"goDemoApi/internal/goDemoApi/database"
 	"goDemoApi/internal/goDemoApi/models"
 	"net/http"
 

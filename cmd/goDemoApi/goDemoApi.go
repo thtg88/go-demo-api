@@ -1,7 +1,7 @@
 package main
 
 import (
-	"goDemoApi/database"
+	"goDemoApi/internal/goDemoApi/database"
 	"goDemoApi/internal/goDemoApi/http"
 	"goDemoApi/internal/worker/queue"
 	"log"
