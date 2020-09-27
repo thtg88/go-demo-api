@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"goDemoApi/app/models"
-	"goDemoApi/database"
+	"goDemoApi/internal/goDemoApi/database"
+	"goDemoApi/internal/goDemoApi/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

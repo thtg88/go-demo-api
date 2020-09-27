@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"flag"
-	"goDemoApi/queue"
-	"goDemoApi/worker/tasks"
+	"goDemoApi/internal/worker/queue"
+	"goDemoApi/internal/worker/tasks"
 	"log"
 
 	"github.com/joho/godotenv"
