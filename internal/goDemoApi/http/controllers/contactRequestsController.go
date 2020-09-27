@@ -46,9 +46,7 @@ func ContactRequestsStore(c *gin.Context) {
 		Text:    []byte("Text Body is, of course, supported!"),
 		HTML:    []byte("<h1>Text Body is, of course, supported!</h1>"),
 	}
-	msg := tasks.ContactEmailTask.WithArgs(context.Background(), e)
-	msg.Delay = time.Minute
-	err := queue.AddToMainQueue(msg)
+	err := queue.AddEmailToMainQueue(e)
 	if err != nil {
 		panic(err)
 	}
