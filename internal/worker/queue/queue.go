@@ -1,13 +1,17 @@
 package queue
 
 import (
+	"context"
 	"fmt"
+	"goDemoApi/internal/worker/tasks"
 	"net/url"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/jordan-wright/email"
 	"github.com/vmihailenco/taskq/v3"
 	"github.com/vmihailenco/taskq/v3/redisq"
 )
@@ -20,6 +24,14 @@ var Factory taskq.Factory
 
 // MainQueue is the main queue to put tasks on
 var MainQueue taskq.Queue
+
+// AddEmailToMainQueue adds an email to the main queue
+func AddEmailToMainQueue(e *email.Email) error {
+	msg := tasks.ContactEmailTask.WithArgs(context.Background(), e)
+	msg.Delay = time.Minute
+
+	return AddToMainQueue(msg)
+}
 
 // AddToMainQueue adds a given taskq.Message to the MainQueue
 func AddToMainQueue(task *taskq.Message) error {

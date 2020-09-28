@@ -41,14 +41,12 @@ func ContactRequestsStore(c *gin.Context) {
 	// }
 
 	e := &email.Email{
-		To:      []string{os.Getenv("MAIL_INTERNAL_NOTIFICATION_ADDRESS")},
-		Subject: os.Getenv("MAIL_INTERNAL_SUBJECT"),
+		To:      []string{os.Getenv("CONTACT_REQUEST_MAIL_INTERNAL_NOTIFICATION_ADDRESS")},
+		Subject: os.Getenv("CONTACT_REQUEST_MAIL_INTERNAL_SUBJECT"),
 		Text:    []byte("Text Body is, of course, supported!"),
 		HTML:    []byte("<h1>Text Body is, of course, supported!</h1>"),
 	}
-	msg := tasks.ContactEmailTask.WithArgs(context.Background(), e)
-	msg.Delay = time.Minute
-	err := queue.AddToMainQueue(msg)
+	err := queue.AddEmailToMainQueue(e)
 	if err != nil {
 		panic(err)
 	}
