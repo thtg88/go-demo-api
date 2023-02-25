@@ -13,7 +13,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/ugorji/go v1.1.8 // indirect
 	github.com/vmihailenco/taskq/v3 v3.0.0
-	golang.org/x/sys v0.0.0-20200923182605-d9f96fdee20d // indirect
+	golang.org/x/sys v0.1.0 // indirect
 	gorm.io/driver/postgres v1.0.0
 	gorm.io/gorm v1.20.1
 )
